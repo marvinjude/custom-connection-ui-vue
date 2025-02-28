@@ -140,6 +140,7 @@ export default {
   padding: 20px;
   border-radius: 8px;
   max-width: 500px;
+
 }
 
 .connect-button {
