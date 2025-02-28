@@ -10,6 +10,11 @@
           <img v-if="integration?.logoUri" :src="integration.logoUri" :alt="integration.name" class="button-logo" />
           <div>
             <h3 class="integration-name">{{ integration.name }}</h3>
+            
+            <!-- Added subtitle -->
+            <p v-if="!connection" class="integration-subtitle">
+              Connect your account to get started
+            </p>
 
             <!-- Connection Parameters Form -->
             <div v-if="fields.length > 0">
@@ -258,5 +263,11 @@ export default {
   align-items: center;
   justify-content: center;
   min-width: 100px;
+}
+
+.integration-subtitle {
+  color: #666;
+  font-size: 0.9em;
+  margin: 0 0 0.5rem 0;
 }
 </style>
