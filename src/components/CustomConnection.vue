@@ -10,7 +10,7 @@
           <img v-if="integration?.logoUri" :src="integration.logoUri" :alt="integration.name" class="button-logo" />
           <div>
             <h3 class="integration-name">{{ integration.name }}</h3>
-            
+
             <!-- Added subtitle -->
             <p v-if="!connection" class="integration-subtitle">
               Connect your account to get started
@@ -254,8 +254,13 @@ export default {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .connect-button {
