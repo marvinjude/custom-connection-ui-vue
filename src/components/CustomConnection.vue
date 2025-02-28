@@ -60,7 +60,9 @@
               </p>
             </div>
 
-            <button @click="connect" class="connect-button">Connect</button>
+            <div class="modal-footer">
+              <button @click="connect" class="connect-button">Connect</button>
+            </div>
           </div>
         </div>
       </div>
@@ -291,5 +293,11 @@ export default {
   color: #666;
   font-size: 0.9em;
   margin: 0 0 0.5rem 0;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
 }
 </style>
