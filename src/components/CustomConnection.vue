@@ -29,10 +29,10 @@
       </div>
 
       <div class="right-section">
-        <span v-if="connecting">Connecting...</span>
-        <button v-else @click="connection ? disconnect() : showModal = true"
+        <button @click="connection ? disconnect() : showModal = true"
           :class="['connect-button', connection ? 'disconnect' : '']">
-          {{ connection ? 'Disconnect' : 'Connect' }}
+          <div v-if="connecting" class="spinner"></div>
+          <span v-else>{{ connection ? 'Disconnect' : 'Connect' }}</span>
         </button>
       </div>
 
@@ -234,5 +234,29 @@ export default {
 .connection-id {
   color: #999;
   font-family: monospace;
+}
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top: 2px solid #fff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.connect-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 100px;
 }
 </style>
