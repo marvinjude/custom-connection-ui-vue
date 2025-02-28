@@ -4,21 +4,37 @@
     <p v-else-if="!integration">Loading...</p>
     <p v-else-if="!authOption">No auth options found for this integration</p>
 
-    <div v-else>
-      <!-- Connection Parameters Form -->
-      <div v-if="fields.length > 0">
-        <strong>Connection Parameters:</strong>
-        <div v-for="field in fields" :key="field">
-          <label>{{ field }}</label>
-          <input type="text" v-model="connectionParameters[field]" />
+    <div v-else class="connection-container">
+      <div class="left-section">
+        <div class="connection-info">
+          <img v-if="integration?.logoUri" :src="integration.logoUri" :alt="integration.name" class="button-logo" />
+          <div>
+            <h3 class="integration-name">{{ integration.name }}</h3>
+
+            <!-- Connection Parameters Form -->
+            <div v-if="fields.length > 0">
+              <strong>Connection Parameters:</strong>
+              <div v-for="field in fields" :key="field">
+                <label>{{ field }}</label>
+                <input type="text" v-model="connectionParameters[field]" />
+              </div>
+            </div>
+
+            <!-- Connection Status -->
+            <div v-if="connection" class="connection-status">
+              Connection ID: <span class="connection-id">{{ connection.id }}</span>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- Connect Button -->
-      <span v-if="connecting">Connecting...</span>
-      <button v-else @click="showModal = true" class="connect-button">
-        Connect {{ integrationKey }}
-      </button>
+      <div class="right-section">
+        <span v-if="connecting">Connecting...</span>
+        <button v-else @click="connection ? disconnect() : showModal = true"
+          :class="['connect-button', connection ? 'disconnect' : '']">
+          {{ connection ? 'Disconnect' : 'Connect' }}
+        </button>
+      </div>
 
       <!-- Modal -->
       <div v-if="showModal" class="modal" @click.self="showModal = false">
@@ -44,12 +60,6 @@
         </div>
       </div>
 
-      <!-- Connection Status -->
-      <div v-if="connection">
-        <strong>Connected!</strong>
-        <br />
-        Connection Id: {{ connection.id }}
-      </div>
     </div>
   </div>
 </template>
@@ -117,12 +127,58 @@ export default {
         this.connecting = false;
         this.showModal = false;
       }
+    },
+    async disconnect() {
+      this.connecting = true;
+      try {
+        const client = await getClient(sampleAccessToken);
+        await client.integration(this.integrationKey).disconnect();
+        this.connection = null;
+      } catch (err) {
+        this.error = err;
+      } finally {
+        this.connecting = false;
+      }
     }
   }
 }
 </script>
 
 <style scoped>
+.connection-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.left-section {
+  flex: 1;
+}
+
+.right-section {
+  display: flex;
+  justify-content: flex-end;
+  min-width: 200px;
+}
+
+.connection-info {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.integration-name {
+  margin: 0 0 0.5rem 0;
+}
+
+.button-logo {
+  width: 40px;
+  height: 40px;
+}
+
 .modal {
   position: fixed;
   top: 0;
@@ -147,7 +203,7 @@ export default {
   background-color: #4CAF50;
   border: none;
   color: white;
-  padding: 15px 32px;
+  padding: 8px 16px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
@@ -160,5 +216,23 @@ export default {
 
 .connect-button:hover {
   background-color: #45a049;
+}
+
+.connect-button.disconnect {
+  background-color: #dc3545;
+}
+
+.connect-button.disconnect:hover {
+  background-color: #c82333;
+}
+
+.connection-status {
+  font-size: 0.9em;
+  color: #666;
+}
+
+.connection-id {
+  color: #999;
+  font-family: monospace;
 }
 </style>
