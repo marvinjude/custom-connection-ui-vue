@@ -210,6 +210,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1000;
 }
 
 .modal-content {
@@ -221,7 +222,7 @@ export default {
 }
 
 .connect-button {
-  background-color: #4CAF50;
+  background-color: #2196F3;
   border: none;
   color: white;
   padding: 8px 16px;
@@ -236,7 +237,7 @@ export default {
 }
 
 .connect-button:hover {
-  background-color: #45a049;
+  background-color: #1976D2;
 }
 
 .connect-button.disconnect {
