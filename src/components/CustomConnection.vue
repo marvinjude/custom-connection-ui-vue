@@ -16,7 +16,7 @@
               Connect your account to get started
             </p>
 
-            <!-- Connection Parameters Form -->
+            <!-- Connection Parameters Form  -->
             <div v-if="fields.length > 0">
               <strong>Connection Parameters:</strong>
               <div v-for="field in fields" :key="field">
