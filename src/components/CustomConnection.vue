@@ -21,7 +21,7 @@
       </button>
 
       <!-- Modal -->
-      <div v-if="showModal" class="modal">
+      <div v-if="showModal" class="modal" @click.self="showModal = false">
         <div class="modal-content">
           <div class="modal-header">
             <h2>{{ integration.name }}</h2>
