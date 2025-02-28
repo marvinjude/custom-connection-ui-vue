@@ -156,6 +156,22 @@ export default {
   justify-content: space-between;
   align-items: flex-start;
   gap: 1rem;
+  position: relative;
+}
+
+.connection-container::before {
+  content: '';
+  position: absolute;
+  bottom: -20px;
+  left: -20px;
+  width: 200px;
+  height: 200px;
+  background: linear-gradient(135deg, #ff8f00 0%, #ff6d00 100%);
+  filter: blur(60px);
+  opacity: 0.2;
+  z-index: -1;
+  border-radius: 50%;
+  pointer-events: none;
 }
 
 .left-section {
