@@ -5,8 +5,8 @@
     <p v-else-if="!authOption">No auth options found for this integration</p>
 
     <div v-else class="connection-container">
-      <div class="left-section">
-        <div class="connection-info">
+      <div class="d-fl-grow1">
+        <div class="d-d-flex d-fd-row d-ai-flex-start d-g16">
           <img v-if="integration?.logoUri" :src="integration.logoUri" :alt="integration.name" class="button-logo" />
           <div>
             <h3 class="integration-name">{{ integration.name }}</h3>
@@ -27,32 +27,32 @@
 
             <!-- Connection Status -->
             <div v-if="connection" class="connection-status">
-              Connection ID: <span class="connection-id">{{ connection.id }}</span>
+              Connection ID: <span style="font-family: monospace;" class="d-ff-mono">{{ connection.id }}</span>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="right-section">
-        <button @click="connection ? disconnect() : showModal = true"
-          :class="['connect-button', connection ? 'disconnect' : '']">
+      <div c="right-section" class="d-d-flex d-jc-flex-end">
+        <DtButton @click="connection ? disconnect() : showModal = true">
           <div v-if="connecting" class="spinner"></div>
           <span v-else>{{ connection ? 'Disconnect' : 'Connect' }}</span>
-        </button>
+        </DtButton>
       </div>
 
       <!-- Modal -->
-      <div v-if="showModal" class="modal" @click.self="showModal = false">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h2>{{ integration.name }}</h2>
+      <div v-if="showModal" style="top: 0; left: 0; background-color: rgba(0, 0, 0, 0.5);"
+        class="d-d-flex d-jc-center d-ai-center d-ps-fixed  d-w100p d-h100p d-zi-navigation"
+        @click.self="showModal = false">
+        <div style="background-color: #f5f5f5; min-height: 60vh;" class="d-bar8 d-wmx512">
+          <div style="border-bottom: 1px solid #e0e0e0;" class="modal-header d-p8 d-d-flex d-g4">
+            <img class="d-w24 d-bar2" :src="integration.logoUri" :alt="integration.name" />
+            <span>{{ integration.name }}</span>
           </div>
 
-          <div class="modal-body">
-            <img :style="{ width: '100px', height: '100px', borderRadius: '10px' }" :src="integration.logoUri"
-              :alt="integration.name" />
-
-            <div style="margin-top: 10px">
+          <div class="d-p24">
+            <img class="d-w48 d-bar2" :src="integration.logoUri" :alt="integration.name" />
+            <div class="d-mt12">
               <h3>Linking your {{ integration.name }} account</h3>
               <p>
                 Please click Connect to log into Google Drive and authorize
@@ -60,8 +60,10 @@
               </p>
             </div>
 
-            <div class="modal-footer">
-              <button @click="connect" class="connect-button">Connect</button>
+            <div class="d-d-flex d-g4 d-jc-space-between d-mt24">
+              <DtButton @click="connect">Connect</DtButton>
+              <DtButton class="d-fc-purple-400" importance="outlined" @click="showModal = false" kind="inverted">Cancel
+              </DtButton>
             </div>
           </div>
         </div>
@@ -73,9 +75,13 @@
 
 <script>
 import { getClient, sampleAccessToken } from '../utils/client';
+import { DtButton } from "@dialpad/dialtone-vue";
 
 export default {
   name: 'CustomConnection',
+  components: {
+    DtButton
+  },
   props: {
     integrationKey: {
       type: String,
@@ -176,88 +182,15 @@ export default {
   pointer-events: none;
 }
 
-.left-section {
-  flex: 1;
-}
-
-.right-section {
-  display: flex;
-  justify-content: flex-end;
-  min-width: 200px;
-}
-
-.connection-info {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  gap: 1rem;
-}
-
-.integration-name {
-  margin: 0 0 0.5rem 0;
-}
 
 .button-logo {
   width: 40px;
   height: 40px;
 }
 
-.modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-.modal-content {
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  max-width: 500px;
-
-}
-
-.connect-button {
-  background-color: #2196F3;
-  border: none;
-  color: white;
-  padding: 8px 16px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer;
-  border-radius: 4px;
-  transition: background-color 0.3s;
-}
-
-.connect-button:hover {
-  background-color: #1976D2;
-}
-
-.connect-button.disconnect {
-  background-color: #dc3545;
-}
-
-.connect-button.disconnect:hover {
-  background-color: #c82333;
-}
-
 .connection-status {
   font-size: 0.9em;
   color: #666;
-}
-
-.connection-id {
-  color: #999;
-  font-family: monospace;
 }
 
 .spinner {
@@ -282,22 +215,9 @@ export default {
   }
 }
 
-.connect-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 100px;
-}
-
 .integration-subtitle {
   color: #666;
   font-size: 0.9em;
   margin: 0 0 0.5rem 0;
-}
-
-.modal-footer {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 20px;
 }
 </style>

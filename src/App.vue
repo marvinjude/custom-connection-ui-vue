@@ -3,7 +3,7 @@
     <div class="logo-container">
       <img src="https://vite.dev/logo.svg" alt="Logo" class="logo">
     </div>
-    <div class="integrations-list">
+    <div class="d-d-flex d-fd-column d-g8">
       <div v-for="integration in integrations" :key="integration.id" class="integration-card">
         <CustomConnection :integration-key="integration.key" />
       </div>
@@ -40,12 +40,6 @@ export default {
   padding: 2rem;
 }
 
-.integrations-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
 .integration-card {
   background: white;
   border-radius: 12px;
@@ -68,12 +62,6 @@ export default {
 </style>
 
 <style>
-body {
-  font-family: 'Instrument Sans', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: #f8f9fa;
-  margin: 0;
-  padding: 0;
-}
+@import '@dialpad/dialtone/css-default-theme';
+@import '@dialpad/dialtone/css';
 </style>
